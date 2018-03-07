@@ -19,6 +19,9 @@ public class Flight {
 
     public Flight(JsonObject flightAsJson) {
         this.number = flightAsJson.getString("number", "-unknown-");
+        if ("13".equalsIgnoreCase(this.number)) {
+            throw new DangerousFlightException("Too dangerous: " + number);
+        }
     }
 
     public String getNumber() {

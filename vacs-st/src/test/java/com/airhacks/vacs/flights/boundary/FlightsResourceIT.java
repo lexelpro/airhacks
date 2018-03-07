@@ -71,6 +71,13 @@ public class FlightsResourceIT {
         System.out.println("createdFlight = " + createdFlight);
         assertThat(createdFlight.getJsonObject("flight").getString("number", null), is(expected));
     }
+    @Test
+    public void create13() {
+        String expected = "13";
+        JsonObject flight = Json.createObjectBuilder().add("number", expected).build();
+        Response response = this.tut.request().post(Entity.json(flight));
+        assertThat(response.getStatus(), is(201));
+    }
 
 
 }
