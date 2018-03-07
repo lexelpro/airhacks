@@ -3,19 +3,25 @@ package com.airhacks.vacs.flights.entity;
 
 import javax.json.Json;
 import javax.json.JsonObject;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 
-/**
- *
- * @author airhacks.com
- */
+@Entity
+@NamedQuery(name = Flight.ALL, query = "SELECT f FROM Flight f")
 public class Flight {
 
+    @Id
     private String number;
+    private final static String PREFIX = "com.airhacks.vacs.flights.entity.Flight.";
+    public final static String ALL = PREFIX + "findAll";
 
     public Flight(String number) {
         this.number = number;
     }
 
+    public Flight() {
+    }
 
     public Flight(JsonObject flightAsJson) {
         this.number = flightAsJson.getString("number", "-unknown-");
