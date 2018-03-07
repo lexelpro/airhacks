@@ -50,9 +50,10 @@ public class FlightsResource {
                 build();
     }
 
-    JsonObject makeBiggerObject(JsonObject input) {
-        return Json.createObjectBuilder(input).
-                add("first", "a little bigger").
+    JsonObject makeBiggerObject(JsonObject flight) {
+        return Json.createObjectBuilder().
+                add("flight", flight).
+                add("metadata", "crazy").
                 build();
     }
 
