@@ -5,6 +5,8 @@ import com.airhacks.vacs.flights.entity.Flight;
 import java.util.List;
 import java.util.Optional;
 import javax.ejb.Stateless;
+import javax.enterprise.event.Event;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -17,6 +19,9 @@ public class FlightsManager {
 
     @PersistenceContext
     EntityManager em;
+    
+    @Inject
+    Event<Flight> metrics;
 
     public List<Flight> all() {
         return this.em.
@@ -33,6 +38,7 @@ public class FlightsManager {
 
     public String save(Flight flight) {
         flight = this.em.merge(flight);
+        this.metrics.fire(flight);
         return flight.getNumber();
     }
 
