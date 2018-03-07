@@ -1,8 +1,11 @@
 
 package com.airhacks.marketing.vacations.boundary;
 
+import static java.util.concurrent.CompletableFuture.supplyAsync;
 import java.util.concurrent.TimeUnit;
+import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.enterprise.concurrent.ManagedExecutorService;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -20,11 +23,16 @@ public class FlightsResource {
     @Inject
     FlightsCatalog catalog;
 
+    @Resource
+    ManagedExecutorService mes;
+
+
     @GET
     public void flights(@Suspended AsyncResponse response) {
         response.setTimeout(2, TimeUnit.SECONDS);
+        supplyAsync(this.catalog::all, mes).
+                thenAccept(response::resume);
 
-        this.catalog.all().thenAccept(response::resume);
 
     }
 
