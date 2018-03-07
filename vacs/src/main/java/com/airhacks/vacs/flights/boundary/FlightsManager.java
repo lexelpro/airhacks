@@ -2,11 +2,13 @@
 package com.airhacks.vacs.flights.boundary;
 
 import com.airhacks.vacs.flights.entity.Flight;
+import com.airhacks.vacs.monitoring.control.MethodPerformanceSensor;
 import java.util.List;
 import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
+import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -15,6 +17,7 @@ import javax.persistence.PersistenceContext;
  * @author airhacks.com
  */
 @Stateless
+@Interceptors(MethodPerformanceSensor.class)
 public class FlightsManager {
 
     @PersistenceContext
