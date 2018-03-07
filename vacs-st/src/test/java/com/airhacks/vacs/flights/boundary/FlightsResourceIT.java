@@ -2,10 +2,12 @@
  */
 package com.airhacks.vacs.flights.boundary;
 
+import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -56,5 +58,19 @@ public class FlightsResourceIT {
 
         System.out.println("bigObject = " + bigObject);
     }
+
+    @Test
+    public void create() {
+        String expected = "flight-42";
+        JsonObject flight = Json.createObjectBuilder().add("number", expected).build();
+        Response response = this.tut.request().post(Entity.json(flight));
+        assertThat(response.getStatus(), is(201));
+        String locationHeader = response.getHeaderString("Location");
+
+        JsonObject createdFlight = this.client.target(locationHeader).request().get(JsonObject.class);
+        System.out.println("createdFlight = " + createdFlight);
+        assertThat(createdFlight.getJsonObject("flight").getString("number", null), is(expected));
+    }
+
 
 }

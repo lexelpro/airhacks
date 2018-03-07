@@ -16,6 +16,15 @@ public class Flight {
         this.number = number;
     }
 
+
+    public Flight(JsonObject flightAsJson) {
+        this.number = flightAsJson.getString("number", "-unknown-");
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
     public JsonObject toJSON() {
         return Json.createObjectBuilder().
                 add("number", this.number).

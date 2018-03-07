@@ -22,8 +22,11 @@ public class FlightsManager {
         if (number == null || number.contains("7")) {
             return Optional.empty();
         }
-        return Optional.of(new Flight(number));
+        return Optional.ofNullable(new Flight(number));
     }
 
+    public String save(Flight flight) {
+        return flight.getNumber();
+    }
 
 }
