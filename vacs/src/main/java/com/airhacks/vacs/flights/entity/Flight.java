@@ -22,6 +22,9 @@ public class Flight {
         if ("13".equalsIgnoreCase(this.number)) {
             throw new DangerousFlightException("Too dangerous: " + number);
         }
+        if ("7".equalsIgnoreCase(this.number)) {
+            throw new IllegalStateException("my state is not legal " + number);
+        }
     }
 
     public String getNumber() {

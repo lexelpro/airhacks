@@ -80,6 +80,15 @@ public class FlightsResourceIT {
         String info = response.getHeaderString("info");
         System.out.println("info = " + info);
     }
+    @Test
+    public void create7() {
+        String expected = "7";
+        JsonObject flight = Json.createObjectBuilder().add("number", expected).build();
+        Response response = this.tut.request().post(Entity.json(flight));
+        assertThat(response.getStatus(), is(418));
+        String cause = response.getHeaderString("cause");
+        System.out.println("cause = " + cause);
+    }
 
 
 }
