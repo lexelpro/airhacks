@@ -76,7 +76,9 @@ public class FlightsResourceIT {
         String expected = "13";
         JsonObject flight = Json.createObjectBuilder().add("number", expected).build();
         Response response = this.tut.request().post(Entity.json(flight));
-        assertThat(response.getStatus(), is(201));
+        assertThat(response.getStatus(), is(400));
+        String info = response.getHeaderString("info");
+        System.out.println("info = " + info);
     }
 
 
